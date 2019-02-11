@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: limitcheck
+  namespace: kube-system
+spec:
+ ports:
+ - port: 443
+   name: https
+   protocol: TCP
+   targetPort: 443
+ selector:
+  app: limitcheck
+  webhook: limitcheck
+ type: ClusterIP

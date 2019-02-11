@@ -1,0 +1,45 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    app: webhook
+  name: webhook
+spec:
+  selector:
+    matchLabels:
+      app: limitcheck
+      webhook: limitcheck      
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: limitcheck
+        webhook: limitcheck
+    spec:
+      containers:
+      - image: guusvw192/valid-res-quotas:dev
+        imagePullPolicy: Always
+        name: limitcheck
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "250m"
+          requests:
+            memory: "128Mi"
+            cpu: "250m"
+        ports:
+        - containerPort: 443
+          name: https
+        command: ["valid-res-quotas"]
+        args:
+          - -tlsCertFile=/etc/webhook/certs/cert.pem
+          - -tlsKeyFile=/etc/webhook/certs/key.pem
+          - -port=443
+        volumeMounts:
+        - name: webhook-certs
+          mountPath: /etc/webhook/certs
+          readOnly: true
+      volumes:
+        - name: webhook-certs
+          secret:
+            secretName: valid-res-qoutas-certs

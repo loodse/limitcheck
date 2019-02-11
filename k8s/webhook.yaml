@@ -1,0 +1,23 @@
+apiVersion: admissionregistration.k8s.io/v1beta1
+kind: ValidatingWebhookConfiguration
+metadata:
+  name: limitcheck
+webhooks:
+  - name: limitcheck.loodse.com
+    rules:
+      - apiGroups:
+          - ""
+        apiVersions:
+          - v1
+        operations:
+          - CREATE
+        resources:
+          - pods
+    failurePolicy: Fail
+    clientConfig:
+      service: 
+        name: limitcheck
+        namespace: kube-system
+        path: "/validate"
+      caBundle: "${CA_BUNDLE}"
+
