@@ -2,8 +2,9 @@ apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   labels:
-    app: webhook
-  name: webhook
+    app: limitcheck
+  namespace: kube-system
+  name: limitcheck
 spec:
   selector:
     matchLabels:
@@ -42,4 +43,4 @@ spec:
       volumes:
         - name: webhook-certs
           secret:
-            secretName: valid-res-qoutas-certs
+            secretName: limitcheck-certs

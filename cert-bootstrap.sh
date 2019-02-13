@@ -17,9 +17,9 @@ while [[ $# -gt 0 ]]; do
     shift
 done
 
-[ -z ${service} ] && service=webhook
-[ -z ${secret} ] && secret=valid-res-qoutas-certs
-[ -z ${namespace} ] && namespace=default
+[ -z ${service} ] && service=limitcheck
+[ -z ${secret} ] && secret=limitcheck-certs
+[ -z ${namespace} ] && namespace=kube-system
 
 csrName=${service}.${namespace}
 tmpdir=$(mktemp -d)
