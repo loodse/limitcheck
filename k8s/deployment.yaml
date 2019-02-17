@@ -31,7 +31,7 @@ spec:
         ports:
         - containerPort: 443
           name: https
-        command: ["valid-res-quotas"]
+        command: ["limitcheck"]
         args:
           - -tlsCertFile=/etc/webhook/certs/cert.pem
           - -tlsKeyFile=/etc/webhook/certs/key.pem
